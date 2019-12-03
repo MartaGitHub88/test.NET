@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Project1
@@ -64,15 +65,48 @@ namespace Project1
             moveTo.Build().Perform();
 
             browser.FindElement(By.Id("submit")).Submit();
-            
+        }
 
-            //builder.MoveToElement(browser.FindElement(By.Id("")));
-            //moveTo.Build().Perform();
+        [Fact]
+        public void Can_Add_New_Comment()
+            {
+                browser.Navigate().GoToUrl("http://automatyzacja.benedykt.net/");
+                var latestNote = browser.FindElement(By.CssSelector(".entry-title > a"));
+                latestNote.Click();
+                var comment = browser.FindElement(By.Id("comment"));
+                var exampleText = Faker.Lorem.Paragraph();
+                comment.SendKeys(exampleText);
+                var author = browser.FindElement(By.Id("author"));
+                var exampleName = Faker.Name.FullName();
+                author.SendKeys(exampleName);
+                var email = browser.FindElement(By.Id("email"));
+                var exampleEmail = Faker.Internet.Email();
+                email.SendKeys(exampleEmail);
+                MoveToElement(browser.FindElement(By.CssSelector(".nav-links")));
+
+                browser.FindElement(By.Id("submit")).Submit();
+
+                var comments = browser.FindElements(By.CssSelector("article.comment-body"));
+                var myComments = comments
+                .Where(c => c.FindElement(By.CssSelector(".fn")).Text == exampleName)
+                .Where(c => c.FindElement(By.CssSelector(".comment-content > p")).Text == exampleText);
+
+                Assert.Single(myComments);
 
 
 
 
 
+
+
+
+        }
+
+        private void MoveToElement(IWebElement element)
+        {
+            Actions builder = new Actions(browser);
+            Actions moveTo = builder.MoveToElement(element);
+            moveTo.Build().Perform();
 
 
 

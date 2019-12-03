@@ -57,8 +57,17 @@ namespace Project1
             moveTo.Build().Perform();
 
             var emailBox = browser.FindElement(By.Id("email"));
-            signBox.Click();
-            signBox.SendKeys("testynmb@gmail.com");
+            emailBox.Click();
+            emailBox.SendKeys("testynmb@gmail.com");
+
+            builder.MoveToElement(browser.FindElement(By.CssSelector(".nav-links")));
+            moveTo.Build().Perform();
+
+            browser.FindElement(By.Id("submit")).Submit();
+            
+
+            //builder.MoveToElement(browser.FindElement(By.Id("")));
+            //moveTo.Build().Perform();
 
 
 

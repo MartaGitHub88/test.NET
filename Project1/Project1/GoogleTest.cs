@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using System;
 using Xunit;
 
@@ -8,9 +9,11 @@ namespace Project1
     public class GoogleTest : IDisposable
     {
         IWebDriver browser;
+        Actions builder;
         public GoogleTest()
         { 
             browser = new ChromeDriver();
+            builder = new Actions(browser);
         }
 
         [Fact]
@@ -27,6 +30,45 @@ namespace Project1
             Assert.Equal("3", result.Text);
 
         }
+
+        [Fact]
+        public void Can_Add_Comment()
+        {
+            browser.Navigate().GoToUrl("http://automatyzacja.benedykt.net/");
+            var queryBox = browser.FindElement(By.CssSelector(".entry-title"));
+            var link = queryBox.FindElement(By.TagName("a"));
+            link.Click();
+
+            Actions moveTo = builder.MoveToElement(browser.FindElement(By.Id("comment")));
+            moveTo.Build().Perform();
+
+            var commentBox = browser.FindElement(By.Id("comment"));
+            commentBox.Click();
+            commentBox.SendKeys("hello Marta");
+
+            builder.MoveToElement(browser.FindElement(By.Id("email")));
+            moveTo.Build().Perform();
+
+            var signBox = browser.FindElement(By.Id("author"));
+            signBox.Click();
+            signBox.SendKeys("Marta");
+
+            builder.MoveToElement(browser.FindElement(By.Id("url")));
+            moveTo.Build().Perform();
+
+            var emailBox = browser.FindElement(By.Id("email"));
+            signBox.Click();
+            signBox.SendKeys("testynmb@gmail.com");
+
+
+
+
+
+
+
+
+        }
+
         public void Dispose()
         {
             browser.Quit();

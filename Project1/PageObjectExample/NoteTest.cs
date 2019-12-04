@@ -11,14 +11,12 @@ namespace PageObjectExample
             var adminPanel = loginPage.Login("automatyzacja", "auto@Zima2019");
             var exampleNote = new ExampleNote();
             var CreateNewNote = adminPanel.CreateNewNote(exampleNote);
-            //var exampleComment = new ExampleComment();
+            var logOut = adminPanel.LogOut();
             //var NewestNoteExists = note.AddNote(exampleComment);
 
 
 
-            //zalogować się do panelu admina
-            //utworzyc notatkę
-            //wylogowac
+            
             //nowa notatka jest opublikowana
 
 

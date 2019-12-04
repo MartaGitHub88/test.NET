@@ -26,7 +26,7 @@ namespace PageObjectExample
             var latestNote = browser.FindElement(By.CssSelector(".entry-title > a"));
             latestNote.Click();
 
-            return new NotePage();
+            return new NotePage(browser);
 
         }
 

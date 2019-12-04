@@ -93,13 +93,6 @@ namespace Project1
 
                 Assert.Single(myComments);
 
-
-
-
-
-
-
-
         }
 
         private void MoveToElement(IWebElement element)

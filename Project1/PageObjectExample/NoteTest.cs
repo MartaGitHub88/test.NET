@@ -9,7 +9,8 @@ namespace PageObjectExample
         {
             var loginPage = LoginPage.Open(GetBrowser());
             var adminPanel = loginPage.Login("automatyzacja", "auto@Zima2019");
-            //var note = LoginPage.CreateNewestNote();
+            var exampleNote = new ExampleNote();
+            var CreateNewNote = adminPanel.CreateNewNote(exampleNote);
             //var exampleComment = new ExampleComment();
             //var NewestNoteExists = note.AddNote(exampleComment);
 

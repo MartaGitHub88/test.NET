@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace PageObjectExample
 {
@@ -10,13 +11,14 @@ namespace PageObjectExample
         private LoginPage(IWebDriver browser)
         {
             this.browser = browser;
-            
-            
+
+
         }
 
         internal AdminPage Login(string user, string password)
         {
             browser.Navigate().GoToUrl(MAIN_PAGE_BASE_URL);
+            WaitForClickable(By.CssSelector("#user_login"), 5);
             var LoginBox = browser.FindElement(By.CssSelector("#user_login"));
             LoginBox.SendKeys(user);
             var PasswordBox = browser.FindElement(By.CssSelector("#user_pass"));
@@ -36,6 +38,12 @@ namespace PageObjectExample
 
         {
             return new LoginPage(browser);
+        }
+
+        internal void WaitForClickable(By by, int seconds)
+        {
+            var wait = new WebDriverWait(browser, TimeSpan.FromSeconds(seconds));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(by));
         }
     }
 }

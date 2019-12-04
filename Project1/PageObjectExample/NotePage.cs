@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 
@@ -37,12 +36,12 @@ namespace PageObjectExample
         internal bool HasNote(ExampleNote exampleNote)
 
         {
-            var notes = browser.FindElements(By.CssSelector("#main"));
-            var myNotes = notes
-              .Where(c => c.FindElement(By.CssSelector(".entry-title")).Text == exampleNote.Title)
-              .Where(c => c.FindElement(By.CssSelector(".entry-content")).Text == exampleNote.Content);
+            var notes = browser.FindElement(By.CssSelector("#main"));
 
-            return myNotes.Count() == 1;
+            var title = notes.FindElement(By.CssSelector(".entry-title"));
+            var content = notes.FindElement(By.CssSelector(".entry-content"));
+            
+            return title.Text == exampleNote.Title && content.Text == exampleNote.Content;
         }
 
         internal void GoTo(string createNewNote)

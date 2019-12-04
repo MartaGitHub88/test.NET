@@ -12,14 +12,10 @@ namespace PageObjectExample
             var exampleNote = new ExampleNote();
             var CreateNewNote = adminPanel.CreateNewNote(exampleNote);
             var logOut = adminPanel.LogOut();
-            //var NewestNoteExists = note.AddNote(exampleComment);
-
-
-
+            var notePage = new NotePage(GetBrowser());
+            notePage.GoTo(CreateNewNote);
+            Assert.True(notePage.HasNote(exampleNote));
             
-            //nowa notatka jest opublikowana
-
-
         }
 
     }

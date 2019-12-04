@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 
@@ -12,6 +13,8 @@ namespace PageObjectExample
         {
             this.browser = browser;
         }
+
+
 
         internal NotePage AddComment(ExampleComment exampleComment)
         {
@@ -31,9 +34,25 @@ namespace PageObjectExample
             return new NotePage(browser);
         }
 
+        internal bool HasNote(ExampleNote exampleNote)
+
+        {
+            var notes = browser.FindElements(By.CssSelector("#main"));
+            var myNotes = notes
+              .Where(c => c.FindElement(By.CssSelector(".entry-title")).Text == exampleNote.Title)
+              .Where(c => c.FindElement(By.CssSelector(".entry-content")).Text == exampleNote.Content);
+
+            return myNotes.Count() == 1;
+        }
+
+        internal void GoTo(string createNewNote)
+        {
+            browser.Navigate().GoToUrl(createNewNote);
+        }
+
         internal bool Has(ExampleComment exampleComment)
         {
-            var comments = browser.FindElements(By.CssSelector("article.comment-body"));
+            var comments = browser.FindElements(By.CssSelector(".article.comment-body"));
             var myComments = comments
             .Where(c => c.FindElement(By.CssSelector(".fn")).Text == exampleComment.Author)
             .Where(c => c.FindElement(By.CssSelector(".comment-content > p")).Text == exampleComment.Content);

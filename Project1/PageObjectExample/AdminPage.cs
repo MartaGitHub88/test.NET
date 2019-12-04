@@ -30,11 +30,6 @@ namespace PageObjectExample
             var postUrl = browser.FindElement(By.CssSelector("#sample-permalink > a"));
             var url = postUrl.GetAttribute("href");
 
-           // var link = browser.FindElement(By.TagName("a"));
-           // var linkText = link.GetAttribute("href"); 
-
-            
-
             return url;
         }
 
